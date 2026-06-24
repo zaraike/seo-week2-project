@@ -2,7 +2,7 @@
 Runs the login scripts
 """
 
-from login_signup import *
+from login_signup import init_db, sign_up, log_in
 from cities import create_cities_table, add_city, get_cities, delete_city
 from weather import get_weather, get_tip
 
@@ -15,7 +15,9 @@ def start_menu():
     action = ""
     while action.lower() not in ("a", "b"):
         action: str = input(
-            "\x1b[0mWelcome to the Weather App! Would you like to...\nA. Login\nB. Sign Up\n\n>>> \x1b[0;1;3;35m"
+            "\x1b[0mWelcome to the Weather App!"
+            " Would you like to...\n"
+            "A. Login\nB. Sign Up\n\n>>> \x1b[0;1;3;35m"
         )
 
     username = input("\x1b[0mUsername: \x1b[0;1;3;35m")
