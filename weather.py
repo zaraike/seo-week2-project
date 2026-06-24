@@ -12,9 +12,10 @@ WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
 
+
 def get_weather(city):
     """Return current weather for a city as a dicitonary
-    
+
     Returns None if the city is not found or the request fails.
     """
     params = {
@@ -22,11 +23,11 @@ def get_weather(city):
         "appid": WEATHER_API_KEY,
         "units": "imperial",
     }
-    try: 
+    try:
         response = requests.get(WEATHER_URL, params=params, timeout=10)
         response.raise_for_status()
         data = response.json()
-        return{
+        return {
             "temp": round(data["main"]["temp"]),
             "humidity": data["main"]["humidity"],
             "condition": data["weather"][0]["main"],
@@ -35,7 +36,8 @@ def get_weather(city):
         return None
     except (KeyError, IndexError):
         return None
-    
+
+
 def get_tip(weather):
     """Return a one-line clothing tip based on weather dictionary.
 
