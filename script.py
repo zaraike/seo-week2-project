@@ -63,13 +63,17 @@ def weather_menu(username):
         print("3. Remove a city")
         print("4. Log out")
         choice = input(">>> \x1b[1m\x1b[38;2;255;100;128m")
-        print("\x1b[0m", end='')
+        print("\x1b[0m", end="")
 
         if choice == "1":
             city = input("City name: \x1b[1m\x1b[38;2;255;100;128m")
             print("\x1b[0m")
-            add_city(username, city)
-            print(city + " added.")
+            weather = get_weather(city)
+            if weather is None:
+                print(city + " not found. Try again.")
+            else:
+                add_city(username, city)
+                print(city + " added.")
         elif choice == "2":
             cities = get_cities(username)
             if not cities:

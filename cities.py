@@ -44,7 +44,10 @@ def get_cities(username):
     )
     rows = res.fetchall()
     conn.close()
-    return [row[0] for row in rows]
+    cities = []
+    for row in rows:
+        cities.append(row[0])
+    return cities
 
 
 def delete_city(username, city):

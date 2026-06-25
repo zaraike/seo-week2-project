@@ -25,16 +25,13 @@ def get_weather(city):
     }
     try:
         response = requests.get(WEATHER_URL, params=params, timeout=10)
-        response.raise_for_status()
         data = response.json()
         return {
             "temp": round(data["main"]["temp"]),
             "humidity": data["main"]["humidity"],
             "condition": data["weather"][0]["main"],
         }
-    except requests.RequestException:
-        return None
-    except (KeyError, IndexError):
+    except Exception:
         return None
 
 
@@ -44,9 +41,15 @@ def get_tip(weather):
     Falls back to a simple message if the AI call fails.
     """
     prompt = (
-        f"Weather is {weather['temp']}F, {weather['condition']}, "
-        f"{weather['humidity']}% humidity. Give a one-line tip on "
-        f"what to wear or bring. Keep it under 15 words."
+        "Weather is "
+        + str(weather["temp"])
+        + "F, "
+        + weather["condition"]
+        + ", "
+        + str(weather["humidity"])
+        + "% humidity, "
+        + "Give a one-line tip on what to wear or bring. "
+        + "Keep it under 15 words."
     )
     try:
         client = genai.Client(api_key=GEMINI_API_KEY)
